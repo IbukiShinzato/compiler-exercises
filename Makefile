@@ -3,7 +3,7 @@ SRCS	= lex.c main.c token.c syntax.c
 OBJS	= $(SRCS:.c=.o)
 #HEADERS = 
 CC	= gcc
-CFLAGS	= -g -O2 -Wall
+CFLAGS	= -g -O2 -Wall -fno-builtin-exp
 
 all: $(PACKAGE)
 

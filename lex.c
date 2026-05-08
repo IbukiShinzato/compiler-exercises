@@ -7,9 +7,11 @@
 #define false     0
 #define TOKENSIZE 1024
 
-const char white_space[] = {'\t', ' ', NULL};
-const char numbers[]     = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', NULL};
-const char operators[]   = {'+', '*', NULL};
+#define SCAN_END '\0'
+
+const char white_space[] = {'\t', ' ', SCAN_END};
+const char numbers[]     = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', SCAN_END};
+const char operators[]   = {'+', '*', SCAN_END};
 
 #define ERROR_NULL    1
 #define ERROR_UNKNOWN 2
@@ -17,7 +19,7 @@ const char operators[]   = {'+', '*', NULL};
 static int do_check_simbols(char c, const char *simbol_array)
 {
 	int i;
-	for (i = 0; simbol_array[i] != NULL; i++) {
+	for (i = 0; simbol_array[i] != SCAN_END; i++) {
 		if (c == simbol_array[i])
 			return true;
 	}
