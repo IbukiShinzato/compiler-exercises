@@ -76,10 +76,14 @@ void show_token_list()
     struct list_head *tl_head, *list;
 
     tl_head = get_token_list_head();
+
+    printf("List Head (dummy): %p\n", (void*)tl_head);
+
     for (list = tl_head->next; list != tl_head; list = list->next)
     {
         tl = container_of(list, token_list, list);
-        printf("Token: %s, Type: %d\n", tl->token, tl->type);
+        printf("Token: %s, Type: %d, List Addr: %p, Next: %p, Prev: %p\n", tl->token, tl->type,
+               (void*)&(tl->list), (void*)(tl->list.next), (void*)(tl->list.prev));
     }
 
     return;
