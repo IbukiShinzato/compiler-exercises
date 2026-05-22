@@ -1,6 +1,6 @@
 exp	 :== term exp_tail
 exp_tail :== "+" term exp_tail | "-" term exp_tail | e
 term     :== factor term_tail
-term_tail:== "*" factor term_tail | e
+term_tail:== "*" factor term_tail | "/" factor term_tail | e
 factor   :== num
 num      :== ['0'--'9']* 

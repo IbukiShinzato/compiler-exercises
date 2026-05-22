@@ -96,8 +96,9 @@ static int term_tail(int l)
         return l;
     }
 
-    if (current_token->type == OPERATOR_MUL)
+    if (current_token->type == OPERATOR_MUL || current_token->type == OPERATOR_DIV)
     {
+        int op = current_token->type;
         current_token = get_next_token();
         if (current_token == NULL)
         {
@@ -109,7 +110,28 @@ static int term_tail(int l)
         }
 
         r = factor();
-        r = l * r;
+
+        switch (op)
+        {
+            case OPERATOR_MUL:
+                r = l * r;
+                break;
+            case OPERATOR_DIV:
+                if (r == 0)
+                {
+#ifdef DEBUG
+                    printf("zero divide: error in term_tail()\n");
+#endif
+                    is_error = SYNTAX_ERROR;
+                    return 0;
+                }
+                r = l / r;
+                break;
+            default:
+                is_error = SYNTAX_ERROR;
+                return r;
+        }
+
         r = term_tail(r);
     }
 
