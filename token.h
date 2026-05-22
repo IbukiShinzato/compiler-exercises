@@ -8,6 +8,7 @@ enum token_types
 {
     NUMBER = 1,
     OPERATOR_ADD,
+    OPERATOR_SUB,
     OPERATOR_MUL,
 };
 
