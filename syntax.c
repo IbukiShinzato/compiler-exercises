@@ -44,8 +44,9 @@ static int exp_tail(int l)
         return r;
     }
 
-    if (current_token->type == OPERATOR_ADD)
+    if (current_token->type == OPERATOR_ADD || current_token->type == OPERATOR_SUB)
     {
+        int op = current_token->type;
         current_token = get_next_token();
         if (current_token == NULL)
         {
@@ -57,7 +58,19 @@ static int exp_tail(int l)
         }
 
         r = term();
-        r = l + r;
+
+        switch (op)
+        {
+            case OPERATOR_ADD:
+                r = l + r;
+                break;
+            case OPERATOR_SUB:
+                r = l - r;
+                break;
+            default:
+                break;
+        }
+
         r = exp_tail(r);
     }
 
