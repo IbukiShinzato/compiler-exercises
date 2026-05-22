@@ -68,7 +68,8 @@ static int exp_tail(int l)
                 r = l - r;
                 break;
             default:
-                break;
+                is_error = SYNTAX_ERROR;
+                return r;
         }
 
         r = exp_tail(r);
