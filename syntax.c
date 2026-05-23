@@ -19,7 +19,6 @@ static int exp()
 {
     int l, ret;
 
-    current_token = get_next_token();
     if (current_token == NULL)
     {
 #ifdef DEBUG
@@ -142,26 +141,53 @@ static int factor()
 {
     int ret = 0;
 
+    if (current_token == NULL)
+    {
+        is_error = SYNTAX_ERROR;
+        return 0;
+    }
+
     if (current_token->type == NUMBER)
     {
         ret = atoi(current_token->token);
+        current_token = get_next_token();
+        return ret;
+    }
+    else if (current_token->type == OPERATOR_OPEN)
+    {
+        current_token = get_next_token();
+
+        ret = exp();
+
+        if (current_token != NULL && current_token->type == OPERATOR_CLOSE)
+        {
+            current_token = get_next_token();
+            return ret;
+        }
+        else
+        {
+#ifdef DEBUG
+            printf("syntax error: missing ')' in factor()\n");
+#endif
+            is_error = SYNTAX_ERROR;
+            return 0;
+        }
     }
     else
     {
 #ifdef DEBUG
-        printf("syntax error in factor()\n");
+        printf("syntax error in factor(): unexpected token\n");
 #endif
         is_error = SYNTAX_ERROR;
+        return 0;
     }
-
-    current_token = get_next_token();
-    return ret;
 }
 
 void syntax_analysis()
 {
     int ret;
 
+    current_token = get_next_token();
     ret = exp();
     if (is_error || current_token != NULL)
     {
