@@ -11,6 +11,8 @@ enum token_types
     OPERATOR_SUB,
     OPERATOR_MUL,
     OPERATOR_DIV,
+    OPERATOR_OPEN,
+    OPERATOR_CLOSE,
 };
 
 typedef struct token_list
