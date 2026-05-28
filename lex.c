@@ -12,7 +12,7 @@
 
 const char white_space[] = {'\t', ' ', SCAN_END};
 const char numbers[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', SCAN_END};
-const char operators[] = {'+', '-', '*', '/', SCAN_END};
+const char operators[] = {'+', '-', '*', '/', '(', ')', SCAN_END};
 
 #define ERROR_NULL 1
 #define ERROR_UNKNOWN 2
@@ -51,6 +51,12 @@ static int operator_type(char c)
             break;
         case '/':
             ret = OPERATOR_DIV;
+            break;
+        case '(':
+            ret = OPERATOR_OPEN;
+            break;
+        case ')':
+            ret = OPERATOR_CLOSE;
             break;
     }
 
